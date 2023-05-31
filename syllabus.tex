@@ -1,0 +1,661 @@
+\documentclass[11pt,usenames,dvipsnames,svgnames,x11names,letterpaper]{article}
+\usepackage[lmargin=1in,rmargin=1in,bmargin=1in,tmargin=1in]{geometry}
+
+% -------------------
+% Packages
+% -------------------
+\usepackage{
+	amsmath,		% Math Environments
+	enumerate,	    % Enumerate Environments
+	float,			% Force Placements
+	graphicx,		% Use Images
+	hyperref,		% Pointers
+	lastpage,		% Reference Lastpage
+	multicol,		% Use Multi-columns
+	multirow,		% Use Multi-rows
+	titling,			% Title Placement
+ xspace,
+ fontawesome,
+ colortbl,
+ xcolor,
+ tabularx,
+ paralist       % compactitem, compactenum
+}
+
+\usepackage[all]{tcolorbox}
+% -------------------
+% Hyperref
+% -------------------
+\hypersetup{
+	colorlinks = true,
+  	linkcolor  = Tomato,
+  	urlcolor   = Tomato
+}
+\renewcommand\UrlFont{\normalfont}
+
+
+% -------------------
+% Font
+% -------------------
+\usepackage[T1]{fontenc}
+\usepackage{charter}
+
+
+% -------------------
+% Commands
+% -------------------
+\newcommand{\lefthead}[2]{\noindent\textbf{#1}\hfill\\[#2]}
+\definecolor{iconColor}{HTML}{383E56}
+\newcommand{\urllink}[2]{\href{#1}{\textcolor{Tomato3}{{{\tiny\faChevronRight}\uline{#2}}}}}
+\newcommand{\mynote}{\textcolor{DodgerBlue2}{{\faEdit}}\xspace}
+\def\CC{{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\tiny\bf ++}}~}
+
+
+\newtcbox{\myTerminal}{
+enhanced,
+nobeforeafter,
+tcbox raise base,
+boxrule=0.5pt,
+top=0mm,
+bottom=0mm,
+right=0.5mm,
+left=6mm,
+arc=1pt,
+boxsep=1pt, 
+% listing options={language=bash},
+% listing options={language={bash}},
+before upper={\vphantom{dlg}},
+colframe=black,
+listing options={language={bash}},
+colupper=white,
+% coltext=white,
+colback=black,
+% colback=black!75!white,
+fontupper=\ttfamily,
+% drop fuzzy shadow=BrickRed,
+overlay={
+    \begin{tcbclipinterior}
+    \fill[white] (frame.south west)
+    rectangle node[text=BrickRed,font=\sffamily\bfseries\footnotesize,rotate=0] {\faTerminal} ([xshift=6mm]frame.north west);
+    \end{tcbclipinterior}
+    }
+}
+
+\newcommand\doublerulefill{\leavevmode\leaders\vbox{\hrule width .1pt\kern1pt\hrule}\hfill\kern0pt }
+
+% Remove indentation
+\setlength\parindent{0pt}
+% -------------------
+% Course Information
+% -------------------
+
+% Simply fill in the information to fit the current course.
+
+% Instructor
+\newcommand{\instructor}{Z. Kootbally \& C. Schlenoff}
+% Instructor Office
+\newcommand{\office}{Carnegie Room}
+% Instructor Email
+\newcommand{\email}{\urllink{emailto:zeidk@umd.edu}{zeidk@umd.edu} \& \urllink{emailto:cschleno@umd.edu}{cschleno@umd.edu}}
+% Instructor Website
+\newcommand{\website}{WEBSITE}
+% Course Subject Abbreviation
+\newcommand{\coursecode}{ENPM663}
+% Course Title
+\newcommand{\coursetitle}{Building a Manufacturing Robot
+Software System}
+% Section
+\newcommand{\coursesection}{Summer}
+% Season
+\newcommand{\semester}{2023}
+% Office Hours
+\newcommand{\officehours}{HOURS}
+% Course Supervisor
+\newcommand{\coursesupervisor}{SUPERVISOR}
+% Class Dates
+\newcommand{\classdates}{05/31 -- 08/15}
+% Class Time
+\newcommand{\classtime}{5:30 pm -- 8:15 pm}
+% Classroom
+\newcommand{\classroom}{Zoom}
+
+
+% -------------------
+% Header & Footer
+% -------------------
+\usepackage{fancyhdr}
+
+\fancypagestyle{pages}{
+	%Headers
+	\fancyhead[L]{}
+	\fancyhead[C]{}
+	\fancyhead[R]{}
+\renewcommand{\headrulewidth}{0pt}
+	%Footers
+	\fancyfoot[L]{}
+	\fancyfoot[C]{}
+	\fancyfoot[R]{\thepage \,of \pageref*{LastPage}}
+\renewcommand{\footrulewidth}{0.0pt}
+}
+\headheight=0pt
+\footskip=20pt
+
+\pagestyle{pages}
+
+
+% -------------------
+% Title
+% -------------------
+\title{\Large\bfseries \coursecode: \coursetitle \\[0.1cm] \coursesection\ --- \semester}
+\author{}
+\date{}
+\setlength{\droptitle}{-2cm}
+
+
+% -------------------
+% Content
+% -------------------
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\vspace{-2cm}
+
+
+% Introduction
+\lefthead{Instructor Information}{0.3cm}
+\indent \emph{Name:} \instructor \\
+\indent \emph{Email:} \email \\
+% \indent \emph{Office Hours:} \officehours \\
+% \indent \emph{Course Supervisor:} \coursesupervisor 
+\\[0.1cm]
+
+
+% Class Information
+\lefthead{Class Information}{0.3cm}
+\indent \emph{Dates:} \classdates \\
+\indent \emph{Time:} \classtime \\
+\indent \emph{Classroom:} \classroom \\[0.3cm]
+
+
+
+
+
+% Course Description 
+\section{Course Description}
+\noindent This hands-on course will look at the components of manufacturing robots, including architectures, planning/control, simulation, and measurement science.
+
+Students will explore the work that is being researched around the world in each of these areas, and will perform small hands-on exercises in most of the classes to gain a deeper understanding of how a selected set of these technologies can be applied to real-world challenges. This course will have invited presentations from experts in the field. The course will culminate in the development of a simulation-based control system that will address challenges presented in the \urllink{https://www.nist.gov/el/intelligent-systems-division-73500/agile-robotics-industrial-automation-competition}{Agile Robotics for Industrial Automation Competition (ARIAC)}. 
+
+\doublerulefill
+
+\noindent
+\mynote There will be a significant amount of programming in this class, so prior \CC or Python programming experience is necessary.
+
+\doublerulefill
+
+% Learning Outcomes
+\subsection{Learning Outcome}
+After successfully completing this course you will be able to \dots
+\begin{compactitem}
+    \item Develop an architecture for pick-and-place operations.
+    \item Implement the architecture.
+    \item Use sensors and cameras for pick-and-place and for industrial challenges.
+    \item Write \CC, Python, and \CC/Python ROS packages.
+    \item Control an industrial robot with Moveit2 to perform kitting.
+    \item Use ROS tools (e.g., RViz and Rqt) for debugging and visualizing programs.
+\end{compactitem} \vspace{0.3cm}
+
+\subsection{Course Communication}
+Time-sensitive information will be sent to students on ELMS. It is important that students regularly connect to ELMS. To discuss questions, absences, or accommodations, students should email us on ELMS.
+\vspace{0.3cm}
+
+\subsection{Required Resources}
+List of resources required in this course.
+\begin{compactitem}
+    \item Textbook: This course does not require any textbook.
+    \item Software:
+    \begin{compactitem}
+    \item \urllink{https://phoenixnap.com/kb/install-ubuntu-20-04}{Ubuntu 20.04 Focal Fossa}.
+    \item \urllink{https://docs.ros.org/en/galactic/Installation/Ubuntu-Install-Debians.html}{ROS Galactic}.
+    \begin{compactitem}
+        \item Choose \textit{Desktop Install}.
+    \end{compactitem}
+    \item Gazebo Classic (at least version 11.11).
+    \begin{compactitem}
+        \item Once ROS is installed, check the version of Gazebo: \myTerminal{gazebo -{}-version}
+    \end{compactitem}
+\end{compactitem}
+    \item Documentation: \urllink{https://ariac.readthedocs.io/en/latest/index.html}{ARIAC Documentation}
+\end{compactitem}\vspace{0.3cm}
+
+\subsection{Supplemental Resources}
+List of supplemental resources.
+\begin{compactitem}
+    \item Readings: None.
+    \item Hardware/Software: 
+    \begin{compactitem}
+        \item Laptop or PC with 6 Gb (or more) of RAM, CPU: i7-10875H CPU @ 2.30GHz (or higher). 
+        \item \urllink{https://code.visualstudio.com/}{Visual Studio Code}
+        \begin{compactitem}
+            \item \mynote If you prefer using a different IDE, you are welcome to do so. Visual Studio Code is not mandatory but it comes with many extensions, which greatly help with software development.
+        \end{compactitem}
+        \item \urllink{https://git-scm.com/}{Git}
+        \begin{compactitem}
+            \item \myTerminal{sudo apt update}
+            \item \myTerminal{sudo apt install git}
+            \item \myTerminal{git -{}-version}
+            \item Create a Github account you do not have one already:  \urllink{https://github.com/}{https://github.com/}
+        \end{compactitem}
+        
+    \end{compactitem}
+\end{compactitem} \vspace{0.3cm}
+
+% Phone Policy
+\subsection{Course Structure}
+\noindent This course includes only online sections. All online sections can be access using the following Zoom information:
+\begin{compactitem}
+    \item \urllink{https://umd.zoom.us/j/4367988673?pwd=N0VHdkZnRGlKOUdDOXk0dGdoNmIzUT09}{Zoom link}
+    \item Meeting ID: 436 798 8673
+    \item Passcode: 924777
+\end{compactitem}
+
+After each lecture, a link and passcode to access the recorded lecture will be posted on Canvas in the \textbf{Announcements} section.
+\vspace{0.3cm}
+
+
+\subsection{Tips for Success in this Course}
+\begin{compactenum}
+    \item Participate. I invite you to engage deeply, ask questions, and talk about the course content with your classmates. You can learn a great deal from discussing ideas and perspectives with your peers and professors. Participation can also help you articulate your thoughts and develop critical thinking skills.
+    \item Manage your time. Students are often very busy, and I understand that you have obligations outside of this class. However, students do best when they plan adequate time that is devoted to course work. Block your schedule and set aside plenty of time to complete assignments including extra time to handle any technology related problems.
+    \item Log in regularly. I recommend that you log in to ELMS-Canvas several times a week to view announcements, discussion posts and replies to your posts. You may need to log in multiple times a day when group submissions are due.
+    \item Do not fall behind. This class moves at a quick pace and each week builds on the previous content. If you feel you are starting to fall behind, check in with the instructor as soon as possible so we can troubleshoot together. It will be hard to keep up with the course content if you fall behind in the pre-work or post-work.
+    \item Use ELMS-Canvas notification settings. Pro tip! Canvas ELMS-Canvas can ensure you receive timely notifications in your email or via text. Be sure to enable announcements to be sent instantly or daily.
+    \item Ask for help if needed. If you need help with ELMS-Canvas or other technology, IT Support. If you are struggling with a course concept, reach out to me and your classmates for support.
+\end{compactenum}
+
+
+\section{Policies and Resources for Graduate Courses}
+
+It is our shared responsibility to know and abide by the University of Maryland's policies that relate to all courses, which include topics like:
+\begin{compactitem}
+    \item Academic integrity
+    \item Student and instructor conduct
+    \item Accessibility and accommodations
+    \item Attendance and excused absences
+    \item Grades and appeals
+    \item Copyright and intellectual property
+\end{compactitem}
+Please see the University's website for graduate course-related policies at:\\ \urllink{https://gradschool.umd.edu/course-related-policies}{https://gradschool.umd.edu/course-related-policies}
+
+
+\section{Course Guidelines}
+
+\subsection{Names/Pronouns and Self-Identifications}
+The University of Maryland recognizes the importance of a diverse student body, and we are committed to fostering inclusive and equitable classroom environments. I invite you, if you wish, to tell us how you want to be referred to in this class, both in terms of your name and your pronouns (he/him, she/her, they/them, etc.). Keep in mind that the pronouns someone uses are not necessarily indicative of their gender identity. Visit \urllink{https://lgbtq.umd.edu/}{lgbtq.umd.edu} to learn more.
+
+
+Additionally, it is your choice whether to disclose how you identify in terms of your gender, race, class, sexuality, religion, and dis/ability, among all aspects of your identity (e.g., should it come up in classroom conversation about our experiences and perspectives) and should be self-identified, not presumed or imposed. We will do my best to address and refer to all students accordingly, and I ask you to do the same for all of your fellow Terps.
+
+\subsection{Communication with Instructor}
+
+\begin{itemize}
+    \item \textbf{Email}: If you need to reach out and communicate with me, please email us at \urllink{mailto:zeidk@umd.edu}{zeidk@umd.edu} and \urllink{mailto:cschleno@umd.edu}{cschleno@umd.edu}. Please DO NOT email me with questions that are easily found in the syllabus or on ELMS (i.e. When is this assignment due? How
+much is it worth? etc.) but please DO reach out about personal, academic, and intellectual concerns/questions. While I will do my best to respond to emails within 24 hours, you will more likely receive email responses from me
+on Mondays, Wednesdays and Fridays from 8:00am-10:00am EST
+    \item  \textbf{ELMS}: I will send IMPORTANT announcements via ELMS messaging. You must make sure that your email and announcement notifications (including changes in assignments and/or due dates) are enabled in ELMS so you do not miss any messages. You are responsible for checking your email and Canvas/ELMS inbox with regular
+frequency.
+\end{itemize}
+
+\subsection{Communication with Peers}
+With a diversity of perspectives and experience, we may find ourselves in disagreement and/or debate with one
+another. As such, it is important that we agree to conduct ourselves in a professional manner and that we work
+together to foster and preserve a virtual classroom environment in which we can respectfully discuss and deliberate
+controversial questions. I encourage you to confidently exercise your right to free speech—bearing in mind, of
+course, that you will be expected to craft and defend arguments that support your position. Keep in mind, that free
+speech has its limit and this course is NOT the space for hate speech, harassment, and derogatory language. I will
+make every reasonable attempt to create an atmosphere in which each student feels comfortable voicing their
+argument without fear of being personally attacked, mocked, demeaned, or devalued.
+
+\vspace{0.3cm}
+
+Any behavior (including harassment, sexual harassment, and racially and/or culturally derogatory language) that
+threatens this atmosphere will not be tolerated. Please alert me immediately if you feel threatened, dismissed, or silenced at any point during our semester together and/or if your engagement in discussion has been in some way
+hindered by the learning environment.
+
+\section{Major Assignments}
+
+\subsection{Homework Assignments}
+The purpose of assignments is to make sure you do not fall behind. Regular assignments will help you put in practice the lectures seen in class. Assignments are provided as PDF files on ELMS in the \textbf{Assignments} folder in \textbf{Files} section.
+
+\subsection{Quizzes}
+Quizzes are a good way to check if you are learning in this course. Quizzes are taken at the beginning of class and usually last 10 min. All quizzes are announced a week before that are taken. All quizzes are closed-notes. 
+
+\subsection{Team Project}
+This course does not have a final exam but consists of a final project which includes:
+\begin{compactenum}
+    \item ROS package.
+    \item A 10-15 page report.
+    \item A 15-20 min presentation. \mynote Everyone in the group must present.
+\end{compactenum}
+% Homeworks & Labs
+% \lefthead{Homework \& Labs}{0.3cm}
+
+
+\section{Grading Structure}
+
+\begin{center}
+\begin{tabular}{ |l||c||c||c||c|  }
+ 
+ \hline
+ \rowcolor{Gray!20}
+ Assessment& Number & Points (each)&Points (total)&Weight (\%)\\
+ \hline
+Quiz & $\times$5 & 15 & 75 & 17.6471\\
+ \hline
+Real-world Application (RWA) & $\times$8 & 20 & 160 & 37.6471\\
+ \hline
+ \rowcolor{ProcessBlue!40}
+Final Project: & $\times$1 & 190 & 190 & 44.7059\\
+ \hline
+ \hline
+ \rowcolor{ProcessBlue!20}
+ \hspace{15pt}+ROS Package & $\times$1 & 70 & 70 & \\
+ \hline
+ \rowcolor{ProcessBlue!20}
+ \hspace{15pt}+Presentation & $\times$1 & 60 & 60 & \\
+ \hline
+ \rowcolor{ProcessBlue!20}
+ \hspace{15pt}+Report & $\times$1 & 60 & 60 & \\
+ \hline
+ \hline
+ \rowcolor{Gray!20}
+ Total Points & & & 425 & 100\\
+ 
+%  \multicolumn{5}{|c|}{Country List} \\
+\hline
+\end{tabular}
+\end{center}
+
+\doublerulefill
+
+\mynote The number of quizzes and assignments may be subject to change.
+
+\mynote The weights may be subject to change.
+
+\doublerulefill
+
+\subsection{Academic Integrity}
+For this course, some of your assignments will be collected via Turnitin on our course ELMS page. I have chosen to
+use this tool because it can help you improve your scholarly writing and help me verify the integrity of student
+work. For information about Turnitin, how it works, and the feedback reports you may have access to, visit \urllink{https://umd.service-now.com/itsupport?id=kb_article&sys_id=c0116d8f0f7ef2007f232ca8b1050e63}{Turnitin
+Originality Checker for Students}.
+
+\vspace{0.3cm}
+The University's Code of Academic Integrity is designed to ensure that the principles of academic honesty and
+integrity are upheld. In accordance with this code, the University of Maryland does not tolerate academic
+dishonesty. Please ensure that you fully understand this code and its implications because all acts of academic
+dishonesty will be dealt with in accordance with the provisions of this code. All students are expected to adhere to
+this Code. It is your responsibility to read it and know what it says, so you can start your professional life on the
+right path. \textbf{As future professionals, your commitment to high ethical standards and honesty begins with your time at the University of Maryland}.
+
+\vspace{0.3cm}
+
+It is important to note that course assistance websites, such as CourseHero, or AI generated content are not
+permitted sources, unless the instructor explicitly gives permission. Material taken or copied from these sites can
+be deemed unauthorized material and a violation of academic integrity. These sites offer information that might be
+inaccurate or biased and most importantly, relying on restricted sources will hamper your learning process,
+particularly the critical thinking steps necessary for college-level assignments.
+
+\vspace{0.3cm}
+
+Additionally, students may naturally choose to use online forums for course-wide discussions (e.g., Group lists or
+chats) to discuss concepts in the course. However, collaboration on graded assignments is strictly prohibited
+unless otherwise stated. Examples of prohibited collaboration include: asking classmates for answers on quizzes or
+exams, asking for access codes to clicker polls, etc. Please visit the \urllink{https://academiccatalog.umd.edu/graduate/policies/}{Office of Graduate Studies' full list of campus-wide policies} and reach out if you have questions.
+
+\vspace{0.3cm}
+
+Finally, on each exam or assignment you must write out and sign the following pledge: \textbf{"I pledge on my honor that I have not given or received any unauthorized assistance on this exam/assignment"}. If you ever feel pressured to comply with someone else's academic integrity violation, please reach out to me straight away. Also, if you are ever unclear about acceptable levels of collaboration, \textbf{please ask!} To help you avoid unintentional violations, the following list provide levels of collaboration that are acceptable for each graded exercise. Each assignment will contain more specific information regarding acceptable levels of collaboration.
+
+\begin{compactitem}
+    \item Assignments:
+    \begin{compactitem}
+        \item Open notes: \faCheck
+        \item Use book: \faCheck
+        \item Learn online: \faCheck
+        \item Gather content with AI: \faTimesCircle
+        \item Ask friends: \faTimesCircle
+        \item Work in groups: \faTimesCircle
+    \end{compactitem}
+    \item Quizzes:
+    \begin{compactitem}
+        \item Open notes: \faTimesCircle
+        \item Use book: \faTimesCircle
+        \item Learn online: \faTimesCircle
+        \item Gather content with AI: \faTimesCircle
+        \item Ask friends: \faTimesCircle
+        \item Work in groups: \faTimesCircle
+    \end{compactitem}
+    \item Team project:
+    \begin{compactitem}
+        \item Open notes: \faCheck
+        \item Use book: \faCheck
+        \item Learn online: \faCheck
+        \item Gather content with AI: \faCheck
+        \item Ask friends: \faCheck
+        \item Work in groups: \faCheck
+    \end{compactitem}
+\end{compactitem}
+
+% \begin{center}
+% \begin{table}[H]
+% \scriptsize
+% \begin{tabularx}{\textwidth}{p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}} %change the width of the comments by changing these cm measurements. Add/substract columns by adding/deleting p{} sections. 
+% \arrayrulecolor{Gray}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MODULE 1
+% \multicolumn{4}{l}{\textbf{\textcolor{myCOLOR}{\large}}} \\
+% \hline
+% \rowcolor{lightgray!30}
+%  & Open notes & Use book & Learn online & Use AI & Ask friends & Work in groups \\ \hline 
+% \end{tabularx}
+% \end{table}
+% \end{center}
+
+
+\subsection{Grades}
+
+All assessment scores will be posted on the course ELMS page. If you would like to review any of your grades, or have questions about how something was scored, please email us to schedule a time for us to meet and discuss.
+
+Late work will not be accepted for course credit so please plan to have it submitted well before the scheduled
+deadline. We are happy to discuss any of your grades with you, and if we have made a mistake we will immediately correct
+it. Any formal grade disputes must be submitted in writing and within one week of receiving the grade. Final letter grades are assigned based on the percentage of total assessment points earned. To be fair to everyone we
+have to establish clear standards and apply them consistently, so please understand that being close to a cutoff is
+not the same as making the cut (\textcolor{red}{89.99 $\neq$ 90.00}). It would be unethical to make exceptions for some and not others.
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+ \hline
+ \rowcolor{Gray!30}
+ \multicolumn{10}{|c|}{Final Grade Cutoffs}
+ \\
+ \hline
+ \rowcolor{Gray!10}
++ & 96 \% & + & 87 \% & + & 77 \% & + & 67 \% & & \\
+A & 93 \% & B & 83 \% & C & 73 \% & D & 63 \% & F & < 60 \% \\
+\rowcolor{Gray!10}
+- & 90 \% & - & 80 \% & - & 70 \% & - & 60 \% &  &  \\
+\hline
+\end{tabular}
+\end{center}
+
+
+\subsection{Course Outline}
+\mynote This is a tentative schedule, and subject to change as necessary – monitor the course ELMS page for current
+deadlines. In the unlikely event of a prolonged university closing, or an extended absence from the university,
+adjustments to the course schedule, deadlines, and assignments will be made based on the duration of the closing
+and the specific dates missed.
+
+\newcommand{\weekI}{05/31}
+\newcommand{\weekII}{06/07}
+\newcommand{\weekIII}{06/14}
+\newcommand{\weekIV}{06/21}
+\newcommand{\weekV}{06/28}
+\newcommand{\weekVI}{07/05}
+\newcommand{\weekVII}{07/12}
+\newcommand{\weekVIII}{07/19}
+\newcommand{\weekIX}{07/26}
+\newcommand{\weekX}{08/02}
+\newcommand{\weekXI}{08/09}
+\newcommand{\weekXII}{08/15}
+% \vspace{-19pt}
+\begin{center}
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{p{1cm}p{2cm}p{9cm}p{3cm}} %change the width of the comments by changing these cm measurements. Add/substract columns by adding/deleting p{} sections. 
+\arrayrulecolor{Gray}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MODULE 1
+\multicolumn{4}{l}{\textbf{\textcolor{myCOLOR}{\large}}} \\
+\hline
+\rowcolor{lightgray!30}
+Week & Before class & During class & After class \\ \hline 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\weekI & & \textcolor{DodgerBlue}{L1}: The Robot Operating System (ROS) - Part I& \\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\arrayrulecolor{maingray}\hline
+\weekII &  & \textcolor{OrangeRed3}{Quiz on L1}\hspace{1.5cm}\textcolor{DodgerBlue}{L2}: Course Presentation & \\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\arrayrulecolor{maingray}\hline
+\weekIII &  & \textcolor{DodgerBlue}{L3}: The Robot Operating System (ROS) - Part II & \\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\arrayrulecolor{maingray}\hline
+\weekIV &  \textcolor{blue}{RWA01} & \textcolor{OrangeRed3}{Quiz on L3}\hspace{1.5cm}\textcolor{DodgerBlue}{L4}: Architecture & \\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\arrayrulecolor{maingray}\hline
+\weekV & \textcolor{blue}{RWA02} & \textcolor{OrangeRed3}{Quiz on L4}\hspace{1.5cm}\textcolor{DodgerBlue}{L5}:  Frames and Transforms& \\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\arrayrulecolor{maingray}\hline
+\weekVI &  \textcolor{blue}{RWA03} &  \textcolor{OrangeRed3}{Quiz on L5}\hspace{1.5cm}\textcolor{DodgerBlue}{L6}: Knowledge Representation& \textcolor{Green4}{PR @ 5:30pm}\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\arrayrulecolor{maingray}\hline
+\weekVII & \textcolor{blue}{RWA04} &    \textcolor{DodgerBlue}{L7}: Motion Planning & \textcolor{Green4}{PR @ 5:30pm}\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\arrayrulecolor{maingray}\hline
+\weekVIII &  \textcolor{blue}{RWA05} &   \textcolor{DodgerBlue}{L8}: Agility Challenges& \textcolor{Green4}{PR @ 5:30pm}\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\arrayrulecolor{maingray}\hline
+\weekIX &    &   \textcolor{DodgerBlue}{L9}: Task-level Planning& \\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\arrayrulecolor{maingray}\hline
+\weekX & \textcolor{blue}{RWA06}  &  \textcolor{DodgerBlue}{L10}: Measurement Science & \textcolor{Green4}{PR @ 5:30pm}\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\arrayrulecolor{maingray}\hline
+\weekXI & \textcolor{blue}{RWA07} &  \textcolor{DodgerBlue}{L11}: Data Logging and Third Party Tools & \textcolor{Green4}{PR @ 5:30pm}\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\arrayrulecolor{maingray}\hline
+\weekXII &  \textcolor{blue}{RWA08} & \textcolor{OrangeRed3}{Quiz on L11}\hspace{1.5cm} Live Demo \& Presentation & \textcolor{Green4}{PR @ 5:30pm}\\
+
+\end{tabularx}
+\end{table}
+\end{center}
+
+\begin{compactitem}
+    \item \textcolor{Green4}{PR}: Peer reviews.
+    \item \textcolor{blue}{RWA01}: Publishers and Subscribers.
+    \item \textcolor{blue}{RWA02}: Custom Interfaces and Launch Files.
+    \item \textcolor{blue}{RWA03}: Architecture Diagram and Python/C++ Interface.
+    \item \textcolor{blue}{RWA04}: Report from Sensors.
+    \item \textcolor{blue}{RWA05}: Kitting using Bins.
+    \item \textcolor{blue}{RWA06}: Faulty Part and Faulty Gripper Challenges.
+    \item \textcolor{blue}{RWA07}: High-priority Order Challenge.
+    \item \textcolor{blue}{RWA08}: Sensor Blackout Challenge.
+\end{compactitem}
+
+\section{Resources \& Accommodations}
+
+\subsection{Accessibility and Disability Services}
+
+
+The University of Maryland is committed to creating and maintaining a welcoming and inclusive educational,
+working, and living environment for people of all abilities. The University of Maryland is also committed to the
+principle that no qualified individual with a disability shall, on the basis of disability, be excluded from participation
+in or be denied the benefits of the services, programs, or activities of the University, or be subjected to
+discrimination. The \urllink{https://counseling.umd.edu/ads}{Accessibility \& Disability Service} (ADS) provides reasonable accommodations to qualified
+individuals to provide equal access to services, programs and activities. ADS cannot assist retroactively, so it is
+generally best to request accommodations several weeks before the semester begins or as soon as a disability
+becomes known. Any student who needs accommodations should contact me as soon as possible so that I have
+sufficient time to make arrangements.
+
+\vspace{0.3cm}
+For assistance in obtaining an accommodation, contact Accessibility and Disability Service at \textbf{301-314-7682}, or email
+them at \urllink{emailto:adsfrontdesk@umd.edu}{adsfrontdesk@umd.edu}. Information about \urllink{https://counseling.umd.edu/ads/currentads}{sharing your accommodations with instructors, note taking
+assistance} and more is available from the \urllink{https://counseling.umd.edu/ads}{Counseling Center}.
+
+\subsection{Student Resources and Services}
+aking personal responsibility for your own learning means acknowledging when your performance does not match
+your goals and doing something about it. I hope you will come talk to me so that I can help you find the right
+approach to success in this course, and I encourage you to visit the \urllink{https://counseling.umd.edu/academic/resources/handouts}{Counseling Center's Academic Resources} to
+learn more about the wide range of campus resources available to you.
+
+\vspace{0.3cm}
+In particular, everyone can use some help sharpening their communication skills (and improving their grade) by
+visiting \urllink{https://english.umd.edu/writing-programs/writing-center}{UMD's Writing Center} and schedule an appointment with the campus Writing Center
+
+\vspace{0.3cm}
+You should also know there are a wide range of resources to support you with whatever you might need. If you feel
+it would be helpful to have someone to talk to, visit \urllink{https://counseling.umd.edu/}{UMD's Counseling Center} or \urllink{https://tltc.umd.edu/instructors/teaching-topics/supporting-whole-student}{one of the many other mental
+health resources} on campus.
+
+
+\subsection{Notice of Mandatory Reporting}
+Notice of mandatory reporting of sexual assault, sexual harassment, interpersonal violence, and stalking: As a
+faculty member, I am designated as a "Responsible University Employee", and I must report all disclosures of sexual
+assault, sexual harassment, interpersonal violence, and stalking to UMD's Title IX Coordinator per University Policy
+on Sexual Harassment and Other Sexual Misconduct.
+If you wish to speak with someone confidentially, please contact one of UMD's confidential resources, such as \urllink{https://health.umd.edu/CARE}{CARE
+to Stop Violence} (located on the Ground Floor of the Health Center) at \textbf{301-741-3442} or the \urllink{https://counseling.umd.edu/}{Counseling Center}
+(located at the Shoemaker Building) at \textbf{301-314-7651}.
+You may also seek assistance or supportive measures from UMD's Title IX Coordinator, Angela Nastase, by calling
+\textbf{301-405-1142}, or emailing titleIXcoordinator@umd.edu.
+To view further information on the above, please visit the Office of Civil Rights and Sexual Misconduct's website at
+\urllink{https://ocrsm.umd.edu/}{ocrsm.umd.edu}.
+
+
+\subsection{Basic Needs Security}
+If you have difficulty affording groceries or accessing sufficient food to eat every day, or lack a safe and stable place
+to live, please visit \urllink{https://studentaffairs.umd.edu/basic-needs-security}{UMD's Division of Student Affairs} website for information about resources the campus offers
+you and let me know if I can help in any way.
+
+\subsection{Veteran Resources}
+UMD provides some additional supports to our student veterans. You can access those resources at the office of \urllink{https://stamp.umd.edu/engagement/veteran_student_life}{Veteran Student life} and the \urllink{https://counseling.umd.edu/aboutus}{Counseling Center}. Veterans and active duty military personnel with special circumstances (e.g., upcoming deployments, drill requirements, disabilities) are welcome and encouraged to communicate these, in advance if possible, to the instructor.
+
+\subsection{Netiquette Policy [Optional]}
+Netiquette is the social code of online classes. Students share a responsibility for the course's learning environment. Creating a cohesive online learning community requires learners to support and assist each other. To craft an open and interactive online learning environment, communication has to be conducted in a professional and courteous manner at all times, guided by common sense, collegiality and basic rules of etiquette.
+
+\subsection{Participation}
+
+\begin{compactitem}
+\item Given the interactive style of this class, attendance will be crucial to note-taking and thus your performance
+in this class. Attendance is particularly important also because class discussion will be a critical component
+for your learning.
+\item Each student is expected to make substantive contributions to the learning experience, and attendance is
+expected for every session.
+\item Students with a legitimate reason to miss a live session should communicate in advance with the instructor,
+except in the case of an emergency.
+\item Students who miss a live session are responsible for learning what they miss from that session.
+\item Additionally, students must complete all readings and assignments in a timely manner in order to fully
+participate in class.
+\end{compactitem}
+
+\subsection{Course Evaluation}
+Please submit a course evaluation through Student Feedback on Course Experiences in order to help faculty and
+administrators improve teaching and learning at Maryland. All information submitted to Course Experiences is
+confidential. Campus will notify you when Student Feedback on Course Experiences is open for you to complete
+your evaluations at the end of the semester. Please go directly to the \urllink{https://courseexp.umd.edu/}{Student Feedback on Course Experiences} to
+complete your evaluations. By completing all of your evaluations each semester, you will have the privilege of
+accessing through Testudo the evaluation reports for the thousands of courses for which 70% or more students
+submitted their evaluations.
+
+\subsection{Copyright Notice}
+Course materials are copyrighted and may not be reproduced for anything other than personal use without written
+permission.
+
+\end{document}
